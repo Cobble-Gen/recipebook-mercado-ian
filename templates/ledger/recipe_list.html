@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Recipes List{% endblock %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+        <h1>Welcome, {{ request.user.username }}!</h1>
+        <form method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Logout</button>
+        </form>
+    
+        {% else %}
+        <a href="{% url 'login' %}">Login</a>
+        {% endif %}
+
+    <ul>
+        {% for recipe in object_list %}
+            <li><a href="{{ recipe.get_absolute_url }}">{{ recipe.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
