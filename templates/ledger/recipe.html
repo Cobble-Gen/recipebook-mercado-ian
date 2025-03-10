@@ -1,27 +1,16 @@
-{% extends 'base.html' %}
+{% extends 'ledger/ledger_base.html' %}
 {% load static %}
 
 {% block title %}{{ recipe.name }}{% endblock %}
 
-{% block content %}
-    {% if request.user.is_authenticated %}
-            <h1>Welcome, {{ request.user.username }}!</h1>
-            <form method="POST" action="{% url 'logout' %}">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Logout</button>
-            </form>
+{% block header %}Recipe Page{% endblock %}
 
-            <h2>{{ recipe.name }}</h2>
-            <p>By {{ recipe.author }}</p>
-            <ul>
-                {% for ingredient in recipe.ingredients.all  %}
-                    <li>{{ ingredient.ingredient.name }} : {{ ingredient.quantity }}</li>
-                {% endfor %}
-            </ul>  
-        
-            {% else %}
-            <a href="{% url 'login' %}">Login</a>
-            {% endif %}
-    
+{% block ledger %}   
+    <p>{{ recipe.name }}</p>
+    <p>By {{ recipe.author }}</p>
+    <ul>
+        {% for ingredient in recipe.ingredients.all  %}
+            <li>{{ ingredient.ingredient.name }} : {{ ingredient.quantity }}</li>
+        {% endfor %}
+    </ul>  
 {% endblock %}
