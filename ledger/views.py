@@ -1,9 +1,8 @@
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
 
 from .models import Recipe, RecipeImage
 from .forms import RecipeForm, RecipeImageForm
@@ -17,6 +16,7 @@ class RecipeListView(ListView):
         context = super().get_context_data(**kwargs)
         context['form'] = RecipeForm()
         return context
+
     def post(self, request, *args, **kwargs):
         form = RecipeForm(request.POST)
         if form.is_valid():
@@ -65,4 +65,7 @@ class RecipeImageCreateView(LoginRequiredMixin, CreateView):
     form_class = RecipeImageForm
 
     def get_success_url(self):
-        return reverse_lazy('ledger:recipe', kwargs={'pk': self.object.recipe.pk})
+        return reverse_lazy(
+            'ledger:recipe',
+            kwargs={'pk': self.object.recipe.pk}
+            )
