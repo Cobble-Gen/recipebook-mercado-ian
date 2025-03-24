@@ -1,0 +1,14 @@
+{% extends 'ledger/ledger_base.html' %}
+{% load static %}
+
+{% block title %}Recipe Add{% endblock %}
+
+{% block header %}Add Recipe Page{% endblock %}
+
+{% block ledger %}
+    <form method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}

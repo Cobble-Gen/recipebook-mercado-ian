@@ -5,12 +5,20 @@
 
 {% block header %}Recipe Page{% endblock %}
 
-{% block ledger %}   
+{% block ledger %}
+    {% for image in recipe.images.all %}
+        <img src="{{ image.image.url }}" alt="{{ image.description }}">
+        <p>{{ image.description }}</p>
+        <p>balls</p>
+    {% endfor %}
+
     <p>{{ recipe.name }}</p>
     <p>By {{ recipe.author }}</p>
     <ul>
         {% for ingredient in recipe.ingredients.all  %}
             <li>{{ ingredient.ingredient.name }} : {{ ingredient.quantity }}</li>
         {% endfor %}
-    </ul>  
+    </ul>
+    <a href="{% url 'ledger:recipe-add-image' pk=recipe.pk %}">Add Image</a>
+
 {% endblock %}

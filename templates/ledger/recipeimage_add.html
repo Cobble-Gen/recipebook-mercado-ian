@@ -1,0 +1,14 @@
+{% extends 'ledger/ledger_base.html' %}
+{% load static %}
+
+{% block title %}Add Image{% endblock %}
+
+{% block header %}Add Image Page{% endblock %}
+
+{% block ledger %}
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}
