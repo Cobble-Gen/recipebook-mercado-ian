@@ -12,44 +12,12 @@ class RecipeListView(ListView):
     model = Recipe
     template_name = 'ledger/recipe_list.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form'] = RecipeForm()
-        return context
-
-    def post(self, request, *args, **kwargs):
-        form = RecipeForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return self.get(request, *args, **kwargs)
-        else:
-            self.object_list = self.get_queryset(**kwargs)
-            context = self.get_context_data(**kwargs)
-            context['form'] = form
-            return self.render_to_response(context)
-
 
 class RecipeDetailView(LoginRequiredMixin, DetailView):
     model = Recipe
     template_name = 'ledger/recipe.html'
     redirect_field_name = 'accounts/login'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form'] = RecipeImageForm()
-        return context
-
-    def post(self, request, *args, **kwargs):
-        form = RecipeImageForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return self.get(request, *args, **kwargs)
-        else:
-            self.object_list = self.get_queryset(**kwargs)
-            context = self.get_context_data(**kwargs)
-            context['form'] = form
-            return self.render_to_response(context)
-
+    
 
 class RecipeCreateView(LoginRequiredMixin, CreateView):
     model = Recipe
