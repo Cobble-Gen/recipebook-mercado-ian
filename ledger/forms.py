@@ -1,6 +1,7 @@
 from django import forms
 from .models import Recipe, RecipeImage
 
+
 class RecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
@@ -10,4 +11,4 @@ class RecipeForm(forms.ModelForm):
 class RecipeImageForm(forms.ModelForm):
     class Meta:
         model = RecipeImage
-        fields = '__all__'
+        fields = ['image', 'description']

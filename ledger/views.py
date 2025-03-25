@@ -59,10 +59,19 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
 
 
 class RecipeImageCreateView(LoginRequiredMixin, CreateView):
-    model = RecipeImage
+    model = Recipe
     template_name = 'ledger/recipeimage_add.html'
     redirect_field_name = 'accounts/login'
     form_class = RecipeImageForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['pk'] = self.kwargs['pk']
+        return context
+
+    def form_valid(self, form):
+        form.instance.recipe = Recipe.objects.get(pk=self.kwargs['pk'])
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy(
